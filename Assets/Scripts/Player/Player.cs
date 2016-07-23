@@ -5,57 +5,64 @@ namespace Assets.Scripts.Player
 {
     public partial class Player : MonoBehaviour
     {
-        public bool IsLanded;
+        #region Variables
+        /// <summary>
+        /// The speed that the player will jump at
+        /// </summary>
+        private float _launchSpeed;
+        #endregion
 
-        public float LaunchSpeed = 50.0f;
-
-        public void Awake()
+        #region Methods
+        #region Initialization
+        private void Awake()
         {
-            IsLanded = false;
+            _launchSpeed = 50.0f;
 
-            OVRTouchpad.TouchHandler += HandleTouchHandler;
+            Touchpad.TouchHandler += HandleTouchHandler;
+        }
+        #endregion
+
+        #region Update
+        private void Update()
+        {
+            UpdateText();
         }
 
         private void FixedUpdate()
         {
             //_player.UpdateTrajectory(transform.position, GetComponent<Rigidbody>().velocity + Camera.main.transform.forward * 30.0f, GetComponent<CelestialBodyModel>().GravitationalForce);
         }
+        #endregion
 
+        #region Collision detection
         private void OnCollisionEnter(Collision collision)
         {
             Land(collision);
-
-            IsLanded = true;
         }
 
         private void OnCollisionExit(Collision collision)
         {
             LeavePlanet(collision);
-
-            IsLanded = false;
         }
+        #endregion
 
+        #region Input handling
         private void HandleTouchHandler(object sender, EventArgs e)
         {
-            var touchArgs = (OVRTouchpad.TouchArgs) e;
+            var touchArgs = (Touchpad.TouchEventArgs) e;
 
-            switch (touchArgs.TouchType) {
-                case OVRTouchpad.TouchEvent.SingleTap:
-                    Jump();
-                    break;
-                case OVRTouchpad.TouchEvent.Left:
-                    break;
-                case OVRTouchpad.TouchEvent.Right:
-                    break;
-                case OVRTouchpad.TouchEvent.Up:
-                    if (LaunchSpeed < 100.0f) LaunchSpeed += 5.0f;
-                    break;
-                case OVRTouchpad.TouchEvent.Down:
-                    if (LaunchSpeed > 5.0f) LaunchSpeed -= 5.0f;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
+            _launchSpeed = Mathf.Clamp(_launchSpeed += touchArgs.YSwipe * 30, 0.0f, 100.0f);
+
+            if (touchArgs.SingleTap) Jump();
         }
+        #endregion
+
+        #region Cleanup
+        private void OnDestroy()
+        {
+            Dump();
+        }
+        #endregion
+        #endregion
     }
 }

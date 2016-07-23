@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.Scripts.CelestialBody
@@ -49,7 +48,7 @@ namespace Assets.Scripts.CelestialBody
 
         #region Methods
         #region Initialization
-        public void Awake()
+        private void Awake()
         {
             _parents = new List<Transform>();
 
@@ -60,7 +59,7 @@ namespace Assets.Scripts.CelestialBody
             if (Parent != null) _parents.Add(Parent);
         }
 
-        public void Start()
+        private void Start()
         {
             if (IsCircularOrbit || IsEllipticalOrbit) InitialVelocity = CalculateInitialVelocity();
 
@@ -69,17 +68,18 @@ namespace Assets.Scripts.CelestialBody
         #endregion
 
         #region Update
-        // FixedUpdate is called whenever the Physics Engine Updates
-        public void FixedUpdate()
+        private void FixedUpdate()
         {
             ApplyForces();
         }
         #endregion
 
-        public void OnCollisionEnter(Collision collision)
+        #region Collision detection
+        private void OnCollisionEnter(Collision collision)
         {
             Debug.Log(gameObject.name);
         }
+        #endregion
         #endregion
     }
 }
