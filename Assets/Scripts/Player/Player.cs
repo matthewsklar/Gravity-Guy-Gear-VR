@@ -1,5 +1,4 @@
-﻿using System;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 using UnityEngine;
 
 namespace Assets.Scripts.Player
@@ -13,7 +12,7 @@ namespace Assets.Scripts.Player
         /// </summary>
         private float _launchSpeed;
 
-        private bool _firstSwipe;
+        private GameObject _landedBody;
         #endregion
 
         #region Methods
@@ -21,33 +20,19 @@ namespace Assets.Scripts.Player
         private void Awake()
         {
             _launchSpeed = 50.0f;
-            _firstSwipe = true;
+            _landedBody = null;
 
-            Touchpad.TouchHandler += HandleTouchHandler;
+            OVRTouchpad.TouchHandler += HandleTouchHandler;
+            Touchpad.TouchHandler += HandleTouchpadHandler;
         }
         #endregion
 
         #region Update
         private void Update()
         {
+            FacingCelestialBody();
+
             UpdateText();
-
-            float clampedY = Input.GetAxis("Mouse Y");
-            float absY = Math.Abs(clampedY);
-
-            if (absY < 0.5f) {
-                _firstSwipe = true;
-
-                return;
-            }
-
-            if (_firstSwipe) {
-                _firstSwipe = false;
-
-                return;
-            }
-
-            UpdateVelocity(absY, clampedY);
         }
         #endregion
 
@@ -60,15 +45,6 @@ namespace Assets.Scripts.Player
         private void OnCollisionExit(Collision collision)
         {
             LeavePlanet(collision);
-        }
-        #endregion
-
-        #region Input handling
-        private void HandleTouchHandler(object sender, EventArgs e)
-        {
-            var touchArgs = (Touchpad.TouchEventArgs) e;
-
-            if (touchArgs.SingleTap) Jump();
         }
         #endregion
 

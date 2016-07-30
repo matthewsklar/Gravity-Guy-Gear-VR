@@ -85,6 +85,10 @@ NavMeshSettings:
     cellSize: 0.16666667
     manualCellSize: 0
   m_NavMeshData: {fileID: 0}
+--- !u!4 &521771435 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 463672, guid: 9bf10f0733baba646b3bf7463290e526, type: 2}
+  m_PrefabInternal: {fileID: 549261258}
 --- !u!1001 &535373690
 Prefab:
   m_ObjectHideFlags: 0
@@ -242,13 +246,29 @@ Prefab:
       propertyPath: Parent
       value: 
       objectReference: {fileID: 579402291}
+    - target: {fileID: 463672, guid: 9bf10f0733baba646b3bf7463290e526, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -5000
+      objectReference: {fileID: 0}
+    - target: {fileID: 463672, guid: 9bf10f0733baba646b3bf7463290e526, type: 2}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 463672, guid: 9bf10f0733baba646b3bf7463290e526, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11418642, guid: 9bf10f0733baba646b3bf7463290e526, type: 2}
+      propertyPath: Parent
+      value: 
+      objectReference: {fileID: 579402291}
+    - target: {fileID: 463672, guid: 9bf10f0733baba646b3bf7463290e526, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: -50
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 9bf10f0733baba646b3bf7463290e526, type: 2}
   m_IsPrefabParent: 0
---- !u!4 &549261259 stripped
-Transform:
-  m_PrefabParentObject: {fileID: 464600, guid: 9bf10f0733baba646b3bf7463290e526, type: 2}
-  m_PrefabInternal: {fileID: 549261258}
 --- !u!1 &579402283 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 136928, guid: 01538f1c3c3e04848889987a7bca8e63, type: 2}
@@ -352,7 +372,7 @@ Transform:
   m_Children:
   - {fileID: 579402291}
   - {fileID: 1915778033}
-  - {fileID: 549261259}
+  - {fileID: 521771435}
   - {fileID: 535373691}
   m_Father: {fileID: 0}
   m_RootOrder: 0

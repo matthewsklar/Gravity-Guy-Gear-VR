@@ -18,6 +18,8 @@ namespace Assets.Scripts
         #region Variables
         public static bool IsCreated;
 
+        private static bool _firstSwipe;
+
         #region Events
         public static event EventHandler TouchHandler;
         #endregion
@@ -28,43 +30,38 @@ namespace Assets.Scripts
         {
             if (IsCreated) return;
 
-            OVRTouchpad.TouchHandler += HandleTouchHandler;
+            _firstSwipe = true;
 
             IsCreated = true;
         }
 
-        private static void HandleTouchHandler(object sender, EventArgs e)
+        public static void Update()
         {
-            var touchArgs = (OVRTouchpad.TouchArgs) e;
-            var touchEventArgs = new TouchEventArgs();
+            const float minimumSwipe = 0.5f;
 
-            float clampedX = Input.GetAxis("Mouse X");
-            float clampedY = Input.GetAxis("Mouse Y");
-
-            touchEventArgs.SingleTap = false;
-
-            switch (touchArgs.TouchType)
+            var touchEventArgs = new TouchEventArgs()
             {
-                case OVRTouchpad.TouchEvent.SingleTap:
-                    touchEventArgs.SingleTap = true;
-                    break;
-                case OVRTouchpad.TouchEvent.Left:
-                    touchEventArgs.XSwipe = clampedX;
-                    break;
-                case OVRTouchpad.TouchEvent.Right:
-                    touchEventArgs.XSwipe = clampedX;
-                    break;
-                case OVRTouchpad.TouchEvent.Up:
-                    touchEventArgs.YSwipe = clampedY;
-                    break;
-                case OVRTouchpad.TouchEvent.Down:
-                    touchEventArgs.YSwipe = clampedY;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
+                XSwipe = Input.GetAxis("Mouse X"),
+                YSwipe = Input.GetAxis("Mouse Y")
+            };
+
+            if (Mathf.Max(Mathf.Abs(touchEventArgs.XSwipe), Mathf.Abs(touchEventArgs.YSwipe)) < minimumSwipe)
+            {
+                _firstSwipe = true;
+
+                return;
             }
 
-            if (TouchHandler != null) TouchHandler(null, touchEventArgs);
+            if (_firstSwipe)
+            {
+                _firstSwipe = false;
+
+                return;
+            }
+
+            if (TouchHandler == null) return;
+
+            TouchHandler(null, touchEventArgs);
         }
         #endregion
     }
