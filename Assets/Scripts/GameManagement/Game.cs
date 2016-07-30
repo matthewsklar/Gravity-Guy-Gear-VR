@@ -1,34 +1,55 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using UnityEngine;
 
 namespace Assets.Scripts.GameManagement
 {
+    [SuppressMessage("ReSharper", "UnusedMember.Local")]
     public class Game : MonoBehaviour
     {
+        #region Variables
+        private bool _firstSwipe;
+        #endregion
+
         #region Methods
         #region Initialization
         private void Start()
         {
             Touchpad.Create();
-            Touchpad.TouchHandler += HandleTouchHandler;
+
+            _firstSwipe = true;
         }
         #endregion
 
-        #region Input Handling
-        // TODO: Fix lowering timescale
-        private static void HandleTouchHandler(object sender, EventArgs e)
+        #region Update
+        private void Update()
         {
-            var touchArgs = (Touchpad.TouchEventArgs) e;
+            float clampedX = Input.GetAxis("Mouse X");
+            float absX = Math.Abs(clampedX);
 
-            Mathf.Clamp(Time.timeScale += touchArgs.XSwipe * 50, 0.0f, 100.0f);
-            Utilities.SetText("Timescale: " + Utilities.Round(Time.timeScale) + "%", GameObject.Find("TimescaleText"));
+            if (absX < 0.5f)
+            {
+                _firstSwipe = true;
+
+                return;
+            }
+
+            if (_firstSwipe)
+            {
+                _firstSwipe = false;
+
+                return;
+            }
+
+            Time.timeScale = Mathf.Clamp(Time.timeScale + clampedX / absX * 10.0f, 0.0f, 100.0f);
+            Utilities.SetText("Timescale: " + Time.timeScale + "%", GameObject.Find("TimescaleText"));
         }
         #endregion
 
-        #region Cleanup
-        private void OnDestroy()
+        #region UI
+        private void FacingCelestialBody()
         {
-            Touchpad.TouchHandler -= HandleTouchHandler;
+            //Raycast
         }
         #endregion
         #endregion

@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using UnityEngine;
 
 namespace Assets.Scripts.Player
 {
+    [SuppressMessage("ReSharper", "UnusedMember.Local")]
     public partial class Player : MonoBehaviour
     {
         #region Variables
@@ -10,6 +12,8 @@ namespace Assets.Scripts.Player
         /// The speed that the player will jump at
         /// </summary>
         private float _launchSpeed;
+
+        private bool _firstSwipe;
         #endregion
 
         #region Methods
@@ -17,6 +21,7 @@ namespace Assets.Scripts.Player
         private void Awake()
         {
             _launchSpeed = 50.0f;
+            _firstSwipe = true;
 
             Touchpad.TouchHandler += HandleTouchHandler;
         }
@@ -26,11 +31,23 @@ namespace Assets.Scripts.Player
         private void Update()
         {
             UpdateText();
-        }
 
-        private void FixedUpdate()
-        {
-            //_player.UpdateTrajectory(transform.position, GetComponent<Rigidbody>().velocity + Camera.main.transform.forward * 30.0f, GetComponent<CelestialBodyModel>().GravitationalForce);
+            float clampedY = Input.GetAxis("Mouse Y");
+            float absY = Math.Abs(clampedY);
+
+            if (absY < 0.5f) {
+                _firstSwipe = true;
+
+                return;
+            }
+
+            if (_firstSwipe) {
+                _firstSwipe = false;
+
+                return;
+            }
+
+            UpdateVelocity(absY, clampedY);
         }
         #endregion
 
@@ -50,8 +67,6 @@ namespace Assets.Scripts.Player
         private void HandleTouchHandler(object sender, EventArgs e)
         {
             var touchArgs = (Touchpad.TouchEventArgs) e;
-
-            _launchSpeed = Mathf.Clamp(_launchSpeed += touchArgs.YSwipe * 30, 0.0f, 100.0f);
 
             if (touchArgs.SingleTap) Jump();
         }

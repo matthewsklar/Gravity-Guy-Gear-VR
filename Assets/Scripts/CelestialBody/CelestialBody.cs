@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using UnityEngine;
 
 namespace Assets.Scripts.CelestialBody
@@ -6,6 +7,7 @@ namespace Assets.Scripts.CelestialBody
     /// <summary>
     /// Contains all data related to celestial bodies.
     /// </summary>
+    [SuppressMessage("ReSharper", "UnusedMember.Local")]
     public partial class CelestialBody : MonoBehaviour
     {
         #region Variables

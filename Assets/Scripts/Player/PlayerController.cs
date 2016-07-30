@@ -32,6 +32,11 @@ namespace Assets.Scripts.Player
             material.color = new Color(material.color.r, material.color.g, material.color.b, 1.0f);
         }
 
+        private void UpdateVelocity(float absY, float clampedY)
+        {
+            if (absY > 0.5f) _launchSpeed = Mathf.Clamp(_launchSpeed + clampedY / absY * 5.0f, 0.0f, 100.0f);
+        }
+
         private void UpdateText()
         {
                 Vector3 currentVelocity = gameObject.GetComponent<Rigidbody>().velocity;
@@ -53,12 +58,19 @@ namespace Assets.Scripts.Player
                     GameObject.Find("LaunchVelocityText"));
 
                 Utilities.SetText(
-                    "Launch:" +
+                    "Net:       " +
                     " X: " + Utilities.Round(netVelocity.x) +
                     " Y: " + Utilities.Round(netVelocity.y) +
                     " Z: " + Utilities.Round(netVelocity.z),
                     GameObject.Find("NetVelocityText"));
         }
+
+        #region Cleanup
+        private void Dump()
+        {
+            Touchpad.TouchHandler -= HandleTouchHandler;
+        }
+        #endregion
 
         /*private void UpdateTrajectory(Vector3 initialPosition, Vector3 initialVelocity, Vector3 force)
         {
@@ -78,10 +90,5 @@ namespace Assets.Scripts.Player
                 velocity += force * dT;
             }
         }*/
-
-        private void Dump()
-        {
-            Touchpad.TouchHandler -= HandleTouchHandler;
-        }
     }
 }
