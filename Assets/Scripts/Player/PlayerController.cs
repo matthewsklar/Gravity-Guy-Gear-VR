@@ -13,7 +13,10 @@ namespace Assets.Scripts.Player
         /// </summary>
         private void Jump()
         {
+            // TODO: Add cancel mechanism for on pause jumps
             if (_isLanded) Utilities.AddVelocity(Camera.main.transform.forward * _launchSpeed, gameObject);
+
+            if (Time.timeScale != 0.0f) return;
 
             _isLanded = false;
         }

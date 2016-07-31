@@ -6,7 +6,7 @@ namespace Assets.Scripts.MainMenu
 {
     public partial class MainMenu
     {
-        private void HandleTouchHandler(object sender, EventArgs e)
+        private static void HandleTouchHandler(object sender, EventArgs e)
         {
             var touchArgs = (OVRTouchpad.TouchArgs) e;
 
