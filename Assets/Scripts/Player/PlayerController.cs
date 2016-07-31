@@ -8,13 +8,22 @@ namespace Assets.Scripts.Player
     {
         #region Methods
         #region Actions
+        /// <summary>
+        /// Handle the jump action for the player
+        /// </summary>
         private void Jump()
         {
-            Utilities.AddVelocity(Camera.main.transform.forward * _launchSpeed, gameObject);
+            if (_isLanded) Utilities.AddVelocity(Camera.main.transform.forward * _launchSpeed, gameObject);
+
+            _isLanded = false;
         }
         #endregion
 
         #region Celestial Body Interactions
+        /// <summary>
+        /// Handle the player landing on a celestial body
+        /// </summary>
+        /// <param name="collision">Information about the collision objects</param>
         private void Land(Collision collision)
         {
             Collider collisionCollider = collision.collider;
@@ -26,11 +35,16 @@ namespace Assets.Scripts.Player
             Material material = collision.gameObject.GetComponent<Renderer>().material;
             material.color = new Color(material.color.r, material.color.g, material.color.b, 0.5f);
 
+            _isLanded = true;
             _landedBody = collisionCollider.gameObject;
 
             if (_landedBody.tag == "Finish") GameManager.CurrentLevel.FinishLevel();
         }
 
+        /// <summary>
+        /// Handle the player leaving a celestial body
+        /// </summary>
+        /// <param name="collision">Information about the collision objects</param>
         private void LeavePlanet(Collision collision)
         {
             Debug.Log("Player has left " + collision.collider);
@@ -38,6 +52,7 @@ namespace Assets.Scripts.Player
             Material material = collision.gameObject.GetComponent<Renderer>().material;
             material.color = new Color(material.color.r, material.color.g, material.color.b, 1.0f);
 
+            _isLanded = false;
             _landedBody = null;
         }
         #endregion
@@ -56,23 +71,23 @@ namespace Assets.Scripts.Player
 
                 Utilities.SetText(
                     "Current:" +
-                    " X: " + Utilities.Round(currentVelocity.x) +
-                    " Y: " + Utilities.Round(currentVelocity.y) +
-                    " Z: " + Utilities.Round(currentVelocity.z),
+                    " X: " + Mathf.Round(currentVelocity.x) +
+                    " Y: " + Mathf.Round(currentVelocity.y) +
+                    " Z: " + Mathf.Round(currentVelocity.z),
                     GameObject.Find("CurrentVelocityText"));
 
                Utilities.SetText(
                     "Launch:" +
-                    " X: " + Utilities.Round(launchVelocity.x) +
-                    " Y: " + Utilities.Round(launchVelocity.y) +
-                    " Z: " + Utilities.Round(launchVelocity.z),
+                    " X: " + Mathf.Round(launchVelocity.x) +
+                    " Y: " + Mathf.Round(launchVelocity.y) +
+                    " Z: " + Mathf.Round(launchVelocity.z),
                     GameObject.Find("LaunchVelocityText"));
 
                 Utilities.SetText(
                     "Net:       " +
-                    " X: " + Utilities.Round(netVelocity.x) +
-                    " Y: " + Utilities.Round(netVelocity.y) +
-                    " Z: " + Utilities.Round(netVelocity.z),
+                    " X: " + Mathf.Round(netVelocity.x) +
+                    " Y: " + Mathf.Round(netVelocity.y) +
+                    " Z: " + Mathf.Round(netVelocity.z),
                     GameObject.Find("NetVelocityText"));
         }
         #endregion

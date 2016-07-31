@@ -12,6 +12,14 @@ namespace Assets.Scripts.Player
         /// </summary>
         private float _launchSpeed;
 
+        /// <summary>
+        /// If the player is landed on a GameObject after the next FixedUpdate call
+        /// </summary>
+        private bool _isLanded;
+
+        /// <summary>
+        /// The GameObject, if any, that the player is currently landed on
+        /// </summary>
         private GameObject _landedBody;
         #endregion
 
@@ -20,6 +28,7 @@ namespace Assets.Scripts.Player
         private void Awake()
         {
             _launchSpeed = 50.0f;
+            _isLanded = false;
             _landedBody = null;
 
             OVRTouchpad.TouchHandler += HandleTouchHandler;

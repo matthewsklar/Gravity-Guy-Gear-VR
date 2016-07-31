@@ -37,7 +37,7 @@ namespace Assets.Scripts
 
         public static void Update()
         {
-            const float minimumSwipe = 0.5f;
+            const float minimumSwipe = 1.0f;
 
             var touchEventArgs = new TouchEventArgs()
             {
