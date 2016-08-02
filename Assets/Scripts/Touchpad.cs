@@ -9,6 +9,7 @@ namespace Assets.Scripts
         public class TouchEventArgs : EventArgs
         {
             public bool SingleTap;
+            public bool BackButtonTap;
 
             public float XSwipe;
             public float YSwipe;
@@ -39,24 +40,26 @@ namespace Assets.Scripts
         {
             const float minimumSwipe = 1.0f;
 
-            var touchEventArgs = new TouchEventArgs()
+            var touchEventArgs = new TouchEventArgs
             {
+                BackButtonTap = Input.GetKeyDown(KeyCode.Escape),
                 XSwipe = Input.GetAxis("Mouse X"),
                 YSwipe = Input.GetAxis("Mouse Y")
             };
 
-            if (Mathf.Max(Mathf.Abs(touchEventArgs.XSwipe), Mathf.Abs(touchEventArgs.YSwipe)) < minimumSwipe)
-            {
-                _firstSwipe = true;
 
-                return;
-            }
+            if (!touchEventArgs.BackButtonTap) {
+                if (Mathf.Max(Mathf.Abs(touchEventArgs.XSwipe), Mathf.Abs(touchEventArgs.YSwipe)) < minimumSwipe) {
+                    _firstSwipe = true;
 
-            if (_firstSwipe)
-            {
-                _firstSwipe = false;
+                    return;
+                }
 
-                return;
+                if (_firstSwipe) {
+                    _firstSwipe = false;
+
+                    return;
+                }
             }
 
             if (TouchHandler == null) return;

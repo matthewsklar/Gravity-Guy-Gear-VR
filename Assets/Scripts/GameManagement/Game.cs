@@ -34,6 +34,15 @@ namespace Assets.Scripts.GameManagement
             float absX = Math.Abs(x);
             float absY = Math.Abs(y);
 
+            Level level = GameManager.CurrentLevel;
+
+            if (touchArgs.BackButtonTap) {
+                level.EndLevel(level.LevelIndex);
+                level.StartLevel(level.LevelIndex);
+
+                return;
+            }
+
             if (absY > absX) return;
 
             Time.timeScale = Mathf.Clamp(Time.timeScale + x / absX * 10.0f, 0.0f, 100.0f);

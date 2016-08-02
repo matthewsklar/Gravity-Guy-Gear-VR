@@ -6,7 +6,7 @@
         /// <summary>
         /// All the information and actions related to the current level
         /// </summary>
-        public static Level CurrentLevel { get; set; }
+        public static Level CurrentLevel;
 
         /// <summary>
         /// Start the game

@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 namespace Assets.Scripts
@@ -69,19 +68,6 @@ namespace Assets.Scripts
         public static void SetText(string text, GameObject g)
         {
             g.GetComponent<Text>().text = text;
-        }
-        #endregion
-
-        #region Rounding
-        /// <summary>
-        /// Round the given number to the specified decimal
-        /// </summary>
-        /// <param name="value">The value to round</param>
-        /// <param name="decimals">The amount of decimals to round to (default = 1)</param>
-        /// <returns></returns>
-        public static decimal Round(float value, int decimals = 1)
-        {
-            return Math.Round((decimal)value, decimals, MidpointRounding.AwayFromZero);
         }
         #endregion
         #endregion

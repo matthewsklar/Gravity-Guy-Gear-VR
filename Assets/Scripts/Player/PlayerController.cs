@@ -13,12 +13,14 @@ namespace Assets.Scripts.Player
         /// </summary>
         private void Jump()
         {
-            // TODO: Add cancel mechanism for on pause jumps
+            // TODO: Fix jumping in jump when paused
             if (_isLanded) Utilities.AddVelocity(Camera.main.transform.forward * _launchSpeed, gameObject);
 
-            if (Time.timeScale != 0.0f) return;
+            if (!Time.timeScale.Equals(0.0f)) return;
+            
+            _isLanded = !_isLanded;
 
-            _isLanded = false;
+            if (_isLanded) Utilities.AddVelocity(-Camera.main.transform.forward * _launchSpeed, gameObject);
         }
         #endregion
 
@@ -68,41 +70,42 @@ namespace Assets.Scripts.Player
 
         private void UpdateText()
         {
-                Vector3 currentVelocity = gameObject.GetComponent<Rigidbody>().velocity;
-                Vector3 launchVelocity = Camera.main.transform.forward * _launchSpeed;
-                Vector3 netVelocity = currentVelocity + launchVelocity;
+            Vector3 currentVelocity = gameObject.GetComponent<Rigidbody>().velocity;
+            Vector3 launchVelocity = Camera.main.transform.forward * _launchSpeed;
+            Vector3 netVelocity = currentVelocity + launchVelocity;
 
-                Utilities.SetText(
-                    "Current:" +
-                    " X: " + Mathf.Round(currentVelocity.x) +
-                    " Y: " + Mathf.Round(currentVelocity.y) +
-                    " Z: " + Mathf.Round(currentVelocity.z),
-                    GameObject.Find("CurrentVelocityText"));
+            Utilities.SetText(
+                "Current:" +
+                " X: " + Mathf.Round(currentVelocity.x) +
+                " Y: " + Mathf.Round(currentVelocity.y) +
+                " Z: " + Mathf.Round(currentVelocity.z),
+                GameObject.Find("CurrentVelocityText"));
 
-               Utilities.SetText(
-                    "Launch:" +
-                    " X: " + Mathf.Round(launchVelocity.x) +
-                    " Y: " + Mathf.Round(launchVelocity.y) +
-                    " Z: " + Mathf.Round(launchVelocity.z),
-                    GameObject.Find("LaunchVelocityText"));
+            Utilities.SetText(
+                "Launch:" +
+                " X: " + Mathf.Round(launchVelocity.x) +
+                " Y: " + Mathf.Round(launchVelocity.y) +
+                " Z: " + Mathf.Round(launchVelocity.z),
+                GameObject.Find("LaunchVelocityText"));
 
-                Utilities.SetText(
-                    "Net:       " +
-                    " X: " + Mathf.Round(netVelocity.x) +
-                    " Y: " + Mathf.Round(netVelocity.y) +
-                    " Z: " + Mathf.Round(netVelocity.z),
-                    GameObject.Find("NetVelocityText"));
+            Utilities.SetText(
+                "Net:       " +
+                " X: " + Mathf.Round(netVelocity.x) +
+                " Y: " + Mathf.Round(netVelocity.y) +
+                " Z: " + Mathf.Round(netVelocity.z),
+                GameObject.Find("NetVelocityText"));
+
+            Utilities.SetText(_isLanded ? "" : "Jump", GameObject.Find("JumpText"));
         }
-        #endregion
 
-        #region UI
         private void FacingCelestialBody()
         {
             RaycastHit hit;
             GameObject facingText = GameObject.Find("FacingText");
 
             if (!Physics.Raycast(transform.position, Camera.main.transform.forward, out hit) ||
-                hit.collider.gameObject == _landedBody.gameObject) {
+                hit.collider.gameObject == _landedBody.gameObject)
+            {
                 Utilities.SetText("", facingText);
 
                 return;

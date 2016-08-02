@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace Assets.Scripts
@@ -9,7 +10,7 @@ namespace Assets.Scripts
         /// <summary>
         /// The current level number
         /// </summary>
-        private int _levelIndex;
+        public int LevelIndex;
 
         /// <summary>
         /// The current level name
@@ -21,13 +22,22 @@ namespace Assets.Scripts
         /// <summary>
         /// Start the level
         /// </summary>
-        /// <param name="level">The level number</param>
-        public void StartLevel(int level)
+        /// <param name="index">The level number</param>
+        public void StartLevel(int index)
         {
-            _levelIndex = level;
-            _levelName = "Level " + _levelIndex;
+            LevelIndex = index;
+            _levelName = LevelIndexToLevelName(LevelIndex);
 
             SceneManager.LoadScene(_levelName);
+        }
+
+        /// <summary>
+        /// End a level
+        /// </summary>
+        /// <param name="index">The index of the level to unload</param>
+        public void EndLevel(int index)
+        {
+            SceneManager.UnloadScene(LevelIndexToLevelName(index));
         }
 
         /// <summary>
@@ -35,12 +45,22 @@ namespace Assets.Scripts
         /// </summary>
         public void FinishLevel()
         {
-            SceneManager.UnloadScene(_levelName);
+            EndLevel(LevelIndex);
 
             // TODO: Handle differently (prompt user what they want to do)
-            StartLevel(_levelIndex + 1);
+            StartLevel(LevelIndex + 1);
 
-            Debug.Log("Player has finished level " + _levelIndex + 1);
+            Debug.Log("Player has finished level " + LevelIndex + 1);
+        }
+
+        /// <summary>
+        /// Get the name of the level with with the given index
+        /// </summary>
+        /// <param name="index">The index of the level</param>
+        /// <returns>The name of the level</returns>
+        private string LevelIndexToLevelName(int index)
+        {
+            return "Level " + index;
         }
         #endregion
     }
