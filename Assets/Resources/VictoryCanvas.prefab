@@ -204,7 +204,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11468586, guid: 9bf10f0733baba646b3bf7463290e526, type: 2}
+      - m_Target: {fileID: 11496806, guid: 9bf10f0733baba646b3bf7463290e526, type: 2}
         m_MethodName: ButtonHandler
         m_Mode: 3
         m_Arguments:
@@ -365,7 +365,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11468586, guid: 9bf10f0733baba646b3bf7463290e526, type: 2}
+      - m_Target: {fileID: 11496806, guid: 9bf10f0733baba646b3bf7463290e526, type: 2}
         m_MethodName: ButtonHandler
         m_Mode: 3
         m_Arguments:

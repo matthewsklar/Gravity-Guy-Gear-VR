@@ -4,7 +4,6 @@ namespace Assets.Scripts.CelestialBody
 {
     public partial class CelestialBody
     {
-        // TODO: Add way to see velocity of other objects, maybe looking at them makes it popup with relative velocity as well
         #region Methods
         private void ApplyForces()
         {

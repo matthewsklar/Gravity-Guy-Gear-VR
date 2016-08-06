@@ -20,17 +20,23 @@ namespace Assets.Scripts.GameManagement
         {
             Touchpad.Create();
             Touchpad.TouchHandler += HandleTouchpadHandler;
+
+            Time.timeScale = 50.0f;
         }
         #endregion
 
         #region Update
         private void Update()
         {
+            if (GameManager.IsVictory) return;
+
             Touchpad.Update();
+
+            Utilities.SetText("Timescale: " + Time.timeScale + "%", GameObject.Find("TimescaleText"));
         }
         #endregion
 
-        #region Input dandling
+        #region Input handling
         private static void HandleTouchpadHandler(object sender, EventArgs e)
         {
             var touchArgs = (Touchpad.TouchEventArgs)e;
@@ -41,19 +47,16 @@ namespace Assets.Scripts.GameManagement
             float absX = Math.Abs(x);
             float absY = Math.Abs(y);
 
-            Level level = GameManager.CurrentLevel;
-
             if (touchArgs.BackButtonTap) {
-                level.EndLevel(level.LevelIndex);
-                level.StartLevel(level.LevelIndex);
+                GameManager.CurrentLevel.RestartLevel();
 
                 return;
             }
 
+
             if (absY > absX) return;
 
             Time.timeScale = Mathf.Clamp(Time.timeScale + x / absX * 10.0f, 0.0f, 100.0f);
-            Utilities.SetText("Timescale: " + Time.timeScale + "%", GameObject.Find("TimescaleText"));
         }
         #endregion
         #endregion

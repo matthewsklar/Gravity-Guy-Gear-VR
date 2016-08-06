@@ -7,6 +7,11 @@
         /// All the information and actions related to the current level
         /// </summary>
         public static Level CurrentLevel;
+
+        /// <summary>
+        /// If the player has beaten the current level
+        /// </summary>
+        public static bool IsVictory;
         #endregion
 
         #region Methods
@@ -16,6 +21,7 @@
         public static void StartGame()
         {
             CurrentLevel = new Level();
+            IsVictory = false;
         }
         #endregion
     }

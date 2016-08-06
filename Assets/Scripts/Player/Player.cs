@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using Assets.Scripts.GameManagement;
 using UnityEngine;
 
 namespace Assets.Scripts.Player
@@ -11,11 +12,6 @@ namespace Assets.Scripts.Player
         /// The speed that the player will jump at
         /// </summary>
         private float _launchSpeed;
-
-        /// <summary>
-        /// If the player has won
-        /// </summary>
-        private bool _isVictory;
 
         /// <summary>
         /// If the player is landed on a GameObject after the next FixedUpdate call
@@ -33,9 +29,10 @@ namespace Assets.Scripts.Player
         private void Awake()
         {
             _launchSpeed = 50.0f;
-            _isVictory = false;
             _isLanded = false;
             _landedBody = null;
+
+            GameManager.IsVictory = false;
 
             OVRTouchpad.TouchHandler += HandleTouchHandler;
             Touchpad.TouchHandler += HandleTouchpadHandler;
@@ -45,6 +42,8 @@ namespace Assets.Scripts.Player
         #region Update
         private void Update()
         {
+            if (GameManager.IsVictory) return;
+
             FacingCelestialBody();
 
             UpdateText();

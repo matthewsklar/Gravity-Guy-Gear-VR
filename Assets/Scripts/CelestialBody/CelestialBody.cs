@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using Assets.Scripts.GameManagement;
 using UnityEngine;
 
 namespace Assets.Scripts.CelestialBody
@@ -10,7 +11,7 @@ namespace Assets.Scripts.CelestialBody
     [SuppressMessage("ReSharper", "UnusedMember.Local")]
     public partial class CelestialBody : MonoBehaviour
     {
-        #region Variables
+        #region Fields
         #region Parameters
         // TODO: Replace with more options such as elliptical max/min
         public bool IsCircularOrbit = false;

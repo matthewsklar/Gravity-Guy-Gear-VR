@@ -28,7 +28,7 @@ namespace Assets.Scripts.Player
         {
             GameManager.CurrentLevel.VictoryScreen(gameObject.GetComponent<Rigidbody>(), transform);
 
-            _isVictory = true;
+            GameManager.IsVictory = true;
         }
         #endregion
 
@@ -110,8 +110,6 @@ namespace Assets.Scripts.Player
         {
             RaycastHit hit;
             GameObject facingText = GameObject.Find("FacingText");
-            
-            if (_isVictory) return;
 
             if (!Physics.Raycast(transform.position, Camera.main.transform.forward, out hit) ||
                 hit.collider.gameObject == _landedBody.gameObject)

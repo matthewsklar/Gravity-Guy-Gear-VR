@@ -51,6 +51,15 @@ namespace Assets.Scripts
 
             Debug.Log("Player has finished level " + LevelIndex + 1);
         }
+
+        /// <summary>
+        /// Restart the current level
+        /// </summary>
+        public void RestartLevel()
+        {
+            EndLevel(LevelIndex);
+            StartLevel(LevelIndex);
+        }
         #endregion
 
         // TODO: Implement better
