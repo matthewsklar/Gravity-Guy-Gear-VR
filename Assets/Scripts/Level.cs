@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Assets.Scripts.GameManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -6,7 +6,7 @@ namespace Assets.Scripts
 {
     public class Level
     {
-        #region Variables
+        #region Fields
         /// <summary>
         /// The current level number
         /// </summary>
@@ -19,6 +19,7 @@ namespace Assets.Scripts
         #endregion
 
         #region Methods
+        #region Level handling
         /// <summary>
         /// Start the level
         /// </summary>
@@ -46,22 +47,44 @@ namespace Assets.Scripts
         public void FinishLevel()
         {
             EndLevel(LevelIndex);
-
-            // TODO: Handle differently (prompt user what they want to do)
             StartLevel(LevelIndex + 1);
 
             Debug.Log("Player has finished level " + LevelIndex + 1);
         }
+        #endregion
 
+        // TODO: Implement better
+        public void MainMenu()
+        {
+            SceneManager.LoadScene("Main");
+        }
+
+        /// <summary>
+        /// Show the victory screen
+        /// </summary>
+        /// <param name="rigidbody">Player rigidbody</param>
+        /// <param name="transform">Player transform</param>
+        public void VictoryScreen(Rigidbody rigidbody, Transform transform)
+        {
+            rigidbody.isKinematic = true;
+            transform.position = GameObject.Find("View").GetComponent<Game>().VictoryPosition;
+
+            Object.Destroy(GameObject.Find("Canvas"));
+            Object.Instantiate(Resources.Load("VictoryCanvas"), transform.position + Camera.main.transform.forward * 100,
+                Camera.main.transform.rotation);
+        }
+
+        #region Utilities
         /// <summary>
         /// Get the name of the level with with the given index
         /// </summary>
         /// <param name="index">The index of the level</param>
         /// <returns>The name of the level</returns>
-        private string LevelIndexToLevelName(int index)
+        private static string LevelIndexToLevelName(int index)
         {
             return "Level " + index;
         }
+        #endregion
         #endregion
     }
 }

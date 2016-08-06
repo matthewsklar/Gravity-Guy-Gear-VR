@@ -7,6 +7,13 @@ namespace Assets.Scripts.GameManagement
     [SuppressMessage("ReSharper", "UnusedMember.Local")]
     public class Game : MonoBehaviour
     {
+        #region Fields
+        /// <summary>
+        /// The position of the camera after a victory
+        /// </summary>
+        public Vector3 VictoryPosition;
+        #endregion
+
         #region Methods
         #region Initialization
         private void Start()

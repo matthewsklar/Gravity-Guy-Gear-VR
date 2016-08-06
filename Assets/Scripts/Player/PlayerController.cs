@@ -21,6 +21,14 @@ namespace Assets.Scripts.Player
             _isLanded = !_isLanded;
 
             if (_isLanded) Utilities.AddVelocity(-Camera.main.transform.forward * _launchSpeed, gameObject);
+
+        }
+
+        private void Victory()
+        {
+            GameManager.CurrentLevel.VictoryScreen(gameObject.GetComponent<Rigidbody>(), transform);
+
+            _isVictory = true;
         }
         #endregion
 
@@ -43,7 +51,7 @@ namespace Assets.Scripts.Player
             _isLanded = true;
             _landedBody = collisionCollider.gameObject;
 
-            if (_landedBody.tag == "Finish") GameManager.CurrentLevel.FinishLevel();
+            if (_landedBody.tag == "Finish") Victory();
         }
 
         /// <summary>
@@ -65,7 +73,7 @@ namespace Assets.Scripts.Player
         #region Update
         private void UpdateVelocity(float absY, float clampedY)
         {
-            if (absY > 0.5f) _launchSpeed = Mathf.Clamp(_launchSpeed + clampedY / absY * 5.0f, 0.0f, 100.0f);
+            _launchSpeed = Mathf.Clamp(_launchSpeed + clampedY / absY * 5.0f, 0.0f, 100.0f);
         }
 
         private void UpdateText()
@@ -102,6 +110,8 @@ namespace Assets.Scripts.Player
         {
             RaycastHit hit;
             GameObject facingText = GameObject.Find("FacingText");
+            
+            if (_isVictory) return;
 
             if (!Physics.Raycast(transform.position, Camera.main.transform.forward, out hit) ||
                 hit.collider.gameObject == _landedBody.gameObject)
@@ -143,6 +153,13 @@ namespace Assets.Scripts.Player
             if (absX > absY) return;
 
             UpdateVelocity(absY, y);
+        }
+
+        // TODO: Implement better
+        public void ButtonHandler(int index)
+        {
+            if (index == 0) GameManager.CurrentLevel.MainMenu();
+            else GameManager.CurrentLevel.FinishLevel();
         }
         #endregion
 

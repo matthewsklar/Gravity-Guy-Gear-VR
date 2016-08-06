@@ -2,12 +2,14 @@
 {
     public class GameManager
     {
-        #region Methods
+        #region Fields
         /// <summary>
         /// All the information and actions related to the current level
         /// </summary>
         public static Level CurrentLevel;
+        #endregion
 
+        #region Methods
         /// <summary>
         /// Start the game
         /// </summary>

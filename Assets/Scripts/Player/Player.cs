@@ -6,11 +6,16 @@ namespace Assets.Scripts.Player
     [SuppressMessage("ReSharper", "UnusedMember.Local")]
     public partial class Player : MonoBehaviour
     {
-        #region Variables
+        #region Fields
         /// <summary>
         /// The speed that the player will jump at
         /// </summary>
         private float _launchSpeed;
+
+        /// <summary>
+        /// If the player has won
+        /// </summary>
+        private bool _isVictory;
 
         /// <summary>
         /// If the player is landed on a GameObject after the next FixedUpdate call
@@ -28,6 +33,7 @@ namespace Assets.Scripts.Player
         private void Awake()
         {
             _launchSpeed = 50.0f;
+            _isVictory = false;
             _isLanded = false;
             _landedBody = null;
 
