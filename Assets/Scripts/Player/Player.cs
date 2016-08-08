@@ -28,14 +28,13 @@ namespace Assets.Scripts.Player
         #region Initialization
         private void Awake()
         {
-            _launchSpeed = 50.0f;
+            _launchSpeed = 75.0f;
             _isLanded = false;
             _landedBody = null;
 
             GameManager.IsVictory = false;
 
             OVRTouchpad.TouchHandler += HandleTouchHandler;
-            Touchpad.TouchHandler += HandleTouchpadHandler;
         }
         #endregion
 

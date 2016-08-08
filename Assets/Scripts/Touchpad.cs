@@ -47,7 +47,6 @@ namespace Assets.Scripts
                 YSwipe = Input.GetAxis("Mouse Y")
             };
 
-
             if (!touchEventArgs.BackButtonTap) {
                 if (Mathf.Max(Mathf.Abs(touchEventArgs.XSwipe), Mathf.Abs(touchEventArgs.YSwipe)) < minimumSwipe) {
                     _firstSwipe = true;

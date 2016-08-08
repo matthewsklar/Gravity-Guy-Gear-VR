@@ -14,13 +14,15 @@ namespace Assets.Scripts.Player
         private void Jump()
         {
             // TODO: Fix jumping in jump when paused
-            if (_isLanded) Utilities.AddVelocity(Camera.main.transform.forward * _launchSpeed, gameObject);
+            Vector3 forward = GameManager.MainCamera.transform.forward;
+
+            if (_isLanded) Utilities.AddVelocity(forward * _launchSpeed, gameObject);
 
             if (!Time.timeScale.Equals(0.0f)) return;
             
             _isLanded = !_isLanded;
 
-            if (_isLanded) Utilities.AddVelocity(-Camera.main.transform.forward * _launchSpeed, gameObject);
+            if (_isLanded) Utilities.AddVelocity(-forward * _launchSpeed, gameObject);
 
         }
 
@@ -71,15 +73,10 @@ namespace Assets.Scripts.Player
         #endregion
 
         #region Update
-        private void UpdateVelocity(float absY, float clampedY)
-        {
-            _launchSpeed = Mathf.Clamp(_launchSpeed + clampedY / absY * 5.0f, 0.0f, 100.0f);
-        }
-
         private void UpdateText()
         {
             Vector3 currentVelocity = gameObject.GetComponent<Rigidbody>().velocity;
-            Vector3 launchVelocity = Camera.main.transform.forward * _launchSpeed;
+            Vector3 launchVelocity = GameManager.MainCamera.transform.forward * _launchSpeed;
             Vector3 netVelocity = currentVelocity + launchVelocity;
 
             Utilities.SetText(
@@ -111,9 +108,11 @@ namespace Assets.Scripts.Player
             RaycastHit hit;
             GameObject facingText = GameObject.Find("FacingText");
 
-            if (!Physics.Raycast(transform.position, Camera.main.transform.forward, out hit) ||
-                hit.collider.gameObject == _landedBody.gameObject)
-            {
+            if (!Physics.Raycast(transform.position, GameManager.MainCamera.transform.forward, out hit)) {
+                if (hit.collider == null) return;
+
+                if (hit.collider.gameObject == _landedBody.gameObject) return;
+
                 Utilities.SetText("", facingText);
 
                 return;
@@ -133,24 +132,9 @@ namespace Assets.Scripts.Player
         #region Input handling
         private void HandleTouchHandler(object sender, EventArgs e)
         {
-            var touchArgs = (OVRTouchpad.TouchArgs)e;
+            var touchArgs = (OVRTouchpad.TouchArgs) e;
 
             if (touchArgs.TouchType == OVRTouchpad.TouchEvent.SingleTap) Jump();
-        }
-
-        private void HandleTouchpadHandler(object sender, EventArgs e)
-        {
-            var touchArgs = (Touchpad.TouchEventArgs)e;
-
-            float x = touchArgs.XSwipe;
-            float y = touchArgs.YSwipe;
-
-            float absX = Mathf.Abs(x);
-            float absY = Mathf.Abs(y);
-
-            if (absX > absY) return;
-
-            UpdateVelocity(absY, y);
         }
 
         // TODO: Implement better
@@ -165,7 +149,6 @@ namespace Assets.Scripts.Player
         private void Dump()
         {
             OVRTouchpad.TouchHandler -= HandleTouchHandler;
-            Touchpad.TouchHandler -= HandleTouchpadHandler;
         }
         #endregion
         #endregion

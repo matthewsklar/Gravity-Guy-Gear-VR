@@ -9,6 +9,16 @@ namespace Assets.Scripts.GameManagement
     {
         #region Fields
         /// <summary>
+        /// The main camera for the player
+        /// </summary>
+        public Camera MainCamera;
+
+        /// <summary>
+        /// The view camera for the player
+        /// </summary>
+        public Camera ViewCamera;
+
+        /// <summary>
         /// The position of the camera after a victory
         /// </summary>
         public Vector3 VictoryPosition;
@@ -16,10 +26,18 @@ namespace Assets.Scripts.GameManagement
 
         #region Methods
         #region Initialization
+        private void Awake()
+        {
+            GameManager.MainCamera = MainCamera;
+            GameManager.ViewCamera = ViewCamera;
+
+            MainCamera.enabled = true;
+            ViewCamera.enabled = false;
+        }
+
         private void Start()
         {
-            Touchpad.Create();
-            Touchpad.TouchHandler += HandleTouchpadHandler;
+            OVRTouchpad.TouchHandler += HandleTouchpadHandler;
 
             Time.timeScale = 50.0f;
         }
@@ -30,7 +48,12 @@ namespace Assets.Scripts.GameManagement
         {
             if (GameManager.IsVictory) return;
 
-            Touchpad.Update();
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                GameManager.CurrentLevel.RestartLevel();
+
+                return;
+            }
 
             Utilities.SetText("Timescale: " + Time.timeScale + "%", GameObject.Find("TimescaleText"));
         }
@@ -39,24 +62,33 @@ namespace Assets.Scripts.GameManagement
         #region Input handling
         private static void HandleTouchpadHandler(object sender, EventArgs e)
         {
-            var touchArgs = (Touchpad.TouchEventArgs)e;
+            var touchArgs = (OVRTouchpad.TouchArgs) e;
 
-            float x = touchArgs.XSwipe;
-            float y = touchArgs.YSwipe;
-
-            float absX = Math.Abs(x);
-            float absY = Math.Abs(y);
-
-            if (touchArgs.BackButtonTap) {
-                GameManager.CurrentLevel.RestartLevel();
-
-                return;
+            switch (touchArgs.TouchType) {
+                case OVRTouchpad.TouchEvent.SingleTap:
+                    break;
+                case OVRTouchpad.TouchEvent.Left:
+                    Time.timeScale = Mathf.Clamp(Time.timeScale - 25.0f, 0.0f, 100.0f);
+                    break;
+                case OVRTouchpad.TouchEvent.Right:
+                    Time.timeScale = Mathf.Clamp(Time.timeScale + 25.0f, 0.0f, 100.0f);
+                    break;
+                case OVRTouchpad.TouchEvent.Up:
+                    GameManager.ChangeCamera();
+                    break;
+                case OVRTouchpad.TouchEvent.Down:
+                    GameManager.ChangeCamera();
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
+        }
+        #endregion
 
-
-            if (absY > absX) return;
-
-            Time.timeScale = Mathf.Clamp(Time.timeScale + x / absX * 10.0f, 0.0f, 100.0f);
+        #region Cleanup
+        private void OnDestroy()
+        {
+            OVRTouchpad.TouchHandler -= HandleTouchpadHandler;
         }
         #endregion
         #endregion
