@@ -17,7 +17,7 @@ namespace Assets.Scripts
         /// </summary>
         private string _levelName;
         #endregion
-
+        // TODO: Test different starting planet masses on level 3 to see if can get more circular orbit
         #region Methods
         #region Level handling
         /// <summary>
