@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using Assets.Scripts.GameManagement;
 using UnityEngine;
 
 namespace Assets.Scripts.CelestialBody
