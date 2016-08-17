@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security.Principal;
 using Assets.Scripts.GameManagement;
 using UnityEngine;
 using UnityEngine.UI;
@@ -22,22 +23,45 @@ namespace Assets.Scripts
 
         public bool IsDisplay;
 
+        private readonly int _id;
+
         private GameObject _tutorialMessage;
         #endregion
 
         #region Methods
         #region Initialization
+        public Tutorial(string message, Func<bool> messageEndTrigger)
+        {
+            _message = message;
+            _messageEndTrigger = messageEndTrigger;
+
+            _messageStartTrigger = () => true;
+
+            IsDisplay = false;
+
+            _id = GameManager.RegisteredTutorials.Count - 1;
+        }
+
         public Tutorial(string message, Func<bool> messageStartTrigger, Func<bool> messageEndTrigger)
         {
             _message = message;
             _messageStartTrigger = messageStartTrigger;
             _messageEndTrigger = messageEndTrigger;
+
             IsDisplay = false;
+
+            _id = GameManager.RegisteredTutorials.Count - 1;
         }
         #endregion
 
         public void CheckTrigger()
         {
+            if (_id >= 0) {
+                if (GameManager.RegisteredTutorials[_id].IsDisplay) return;
+            } 
+
+            if (GameManager.CurrentTutorial != _id) return;
+
             if (!_messageStartTrigger.Invoke()) return;
 
             GameManager.CurrentTutorial++;
