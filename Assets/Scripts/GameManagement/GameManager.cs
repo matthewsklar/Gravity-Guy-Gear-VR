@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace Assets.Scripts.GameManagement
 {
@@ -24,6 +25,21 @@ namespace Assets.Scripts.GameManagement
         /// If the player has beaten the current level
         /// </summary>
         public static bool IsVictory;
+
+        /// <summary>
+        /// The current part of tutorial in the current level
+        /// </summary>
+        public static int CurrentTutorial;
+
+        /// <summary>
+        /// The registered parts of a tutorial for the current level
+        /// </summary>
+        public static List<Tutorial> RegisteredTutorials = new List<Tutorial>();
+
+        /// <summary>
+        /// The last touch event
+        /// </summary>
+        public static OVRTouchpad.TouchArgs LastTouchEvent;
         #endregion
 
         #region Methods
@@ -43,6 +59,23 @@ namespace Assets.Scripts.GameManagement
         {
             MainCamera.enabled = !MainCamera.enabled;
             ViewCamera.enabled = !ViewCamera.enabled;
+        }
+
+        /// <summary>
+        /// Register tutorials
+        /// </summary>
+        /// <param name="tutorial">The tutorial to register</param>
+        public static void RegisterTutorial(Tutorial tutorial)
+        {
+            RegisteredTutorials.Add(tutorial);
+        }
+
+        /// <summary>
+        /// Deregister all the registered tutorials
+        /// </summary>
+        public static void DeregisterTutorials()
+        {
+            RegisteredTutorials.Clear();
         }
         #endregion
     }

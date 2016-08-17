@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts.GameManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Object = UnityEngine.Object;
 
 namespace Assets.Scripts
 {
@@ -28,6 +29,10 @@ namespace Assets.Scripts
         {
             LevelIndex = index;
             _levelName = LevelIndexToLevelName(LevelIndex);
+
+            GameManager.CurrentTutorial = -1;
+
+            ImplementTutorials();
 
             SceneManager.LoadScene(_levelName);
         }
@@ -61,6 +66,37 @@ namespace Assets.Scripts
             StartLevel(LevelIndex);
         }
         #endregion
+
+        // TODO: Make work with different levels although now for testing it will only work for level 1 and check for more effective implementation other than switch/case
+        public void ImplementTutorials()
+        {
+            switch (LevelIndex) {
+                case 1:
+                    // TODO: Add way to automatically check if previous tutorial is complete;
+                    GameManager.RegisterTutorial(new Tutorial("Welcome to GRAVITY GUY\nTap to continue",
+                        () => GameManager.CurrentTutorial == -1,
+                        () => GameManager.LastTouchEvent.TouchType == OVRTouchpad.TouchEvent.SingleTap));
+                    GameManager.RegisterTutorial(new Tutorial("Take a look at your surroundings\nTap to continue",
+                        () => !GameManager.RegisteredTutorials[0].IsDisplay && GameManager.CurrentTutorial == 0,
+                        () => GameManager.LastTouchEvent.TouchType == OVRTouchpad.TouchEvent.SingleTap));
+                    GameManager.RegisterTutorial(new Tutorial("Swipe left to speed up\nSwipe to continue",
+                        () => !GameManager.RegisteredTutorials[1].IsDisplay && GameManager.CurrentTutorial == 1,
+                        () => GameManager.LastTouchEvent.TouchType == OVRTouchpad.TouchEvent.Left));
+                    GameManager.RegisterTutorial(new Tutorial("Swipe right to slow down\nSwipe to continue",
+                        () =>
+                            !GameManager.RegisteredTutorials[2].IsDisplay && GameManager.CurrentTutorial == 2 &&
+                            GameManager.LastTouchEvent.TouchType == OVRTouchpad.TouchEvent.Left,
+                        () => GameManager.LastTouchEvent.TouchType == OVRTouchpad.TouchEvent.Right));
+                    GameManager.RegisterTutorial(new Tutorial("Swipe up or down to toggle map view\nSwipe to continue",
+                        () => !GameManager.RegisteredTutorials[3].IsDisplay && GameManager.CurrentTutorial == 3,
+                        () =>
+                            GameManager.LastTouchEvent.TouchType == OVRTouchpad.TouchEvent.Up ||
+                            GameManager.LastTouchEvent.TouchType == OVRTouchpad.TouchEvent.Down));
+                    break;
+                default:
+                    break;
+            }
+        }
 
         // TODO: Implement better
         public void MainMenu()

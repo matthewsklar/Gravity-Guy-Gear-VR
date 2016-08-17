@@ -23,7 +23,8 @@ namespace Assets.Scripts.GameManagement
         /// </summary>
         public Vector3 VictoryPosition;
         #endregion
-
+        // TODO: Make click remove tutorial
+        // TODO: Fix first level starting with jump kind of
         #region Methods
         #region Initialization
         private void Awake()
@@ -55,6 +56,14 @@ namespace Assets.Scripts.GameManagement
                 return;
             }
 
+            int currentTutorial = GameManager.CurrentTutorial;
+
+            if (currentTutorial >= 0) GameManager.RegisteredTutorials[currentTutorial].CheckDisplay();
+
+            GameManager.RegisteredTutorials.ForEach(i => i.CheckTrigger());
+
+            GameManager.LastTouchEvent = null;
+
             Utilities.SetText("Timescale: " + Time.timeScale + "%", GameObject.Find("TimescaleText"));
         }
         #endregion
@@ -64,14 +73,16 @@ namespace Assets.Scripts.GameManagement
         {
             var touchArgs = (OVRTouchpad.TouchArgs) e;
 
+            GameManager.LastTouchEvent = touchArgs;
+            
             switch (touchArgs.TouchType) {
                 case OVRTouchpad.TouchEvent.SingleTap:
                     break;
                 case OVRTouchpad.TouchEvent.Left:
-                    Time.timeScale = Mathf.Clamp(Time.timeScale - 25.0f, 0.0f, 100.0f);
+                    Time.timeScale = Mathf.Clamp(Time.timeScale + 25.0f, 0.0f, 100.0f);
                     break;
                 case OVRTouchpad.TouchEvent.Right:
-                    Time.timeScale = Mathf.Clamp(Time.timeScale + 25.0f, 0.0f, 100.0f);
+                    Time.timeScale = Mathf.Clamp(Time.timeScale - 25.0f, 0.0f, 100.0f);
                     break;
                 case OVRTouchpad.TouchEvent.Up:
                     GameManager.ChangeCamera();

@@ -111,6 +111,7 @@ namespace Assets.Scripts.Player
             if (!Physics.Raycast(transform.position, GameManager.MainCamera.transform.forward, out hit)) {
                 try {
                     if (hit.collider.gameObject == _landedBody.gameObject) return;
+                    // ReSharper disable once UnusedVariable
                 } catch(NullReferenceException e) {
                     //I would throw the error but it happens all the time so it would cluster the log but here's a new throw
                     //   eee
