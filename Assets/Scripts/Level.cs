@@ -44,6 +44,8 @@ namespace Assets.Scripts
         public void EndLevel(int index)
         {
             SceneManager.UnloadScene(LevelIndexToLevelName(index));
+
+            GameManager.DeregisterTutorials();
         }
 
         /// <summary>

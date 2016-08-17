@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Assets.Scripts.GameManagement;
 using UnityEngine;
 
@@ -19,7 +20,7 @@ namespace Assets.Scripts.Player
             if (_isLanded) Utilities.AddVelocity(forward * _launchSpeed, gameObject);
 
             if (!Time.timeScale.Equals(0.0f)) return;
-            
+
             _isLanded = !_isLanded;
 
             if (_isLanded) Utilities.AddVelocity(-forward * _launchSpeed, gameObject);
@@ -141,7 +142,11 @@ namespace Assets.Scripts.Player
         {
             var touchArgs = (OVRTouchpad.TouchArgs) e;
 
-            if (touchArgs.TouchType == OVRTouchpad.TouchEvent.SingleTap) Jump();
+            if (touchArgs.TouchType != OVRTouchpad.TouchEvent.SingleTap) return;
+
+            if (GameManager.RegisteredTutorials.Any(t => t.IsDisplay)) return;
+
+            Jump();
         }
 
         // TODO: Implement better

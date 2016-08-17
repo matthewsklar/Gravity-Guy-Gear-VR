@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using UnityEngine;
 
 namespace Assets.Scripts.GameManagement
@@ -79,9 +80,13 @@ namespace Assets.Scripts.GameManagement
                 case OVRTouchpad.TouchEvent.SingleTap:
                     break;
                 case OVRTouchpad.TouchEvent.Left:
+                    if (GameManager.RegisteredTutorials.Any(t => t.IsDisplay)) return;
+
                     Time.timeScale = Mathf.Clamp(Time.timeScale + 25.0f, 0.0f, 100.0f);
                     break;
                 case OVRTouchpad.TouchEvent.Right:
+                    if (GameManager.RegisteredTutorials.Any(t => t.IsDisplay)) return;
+
                     Time.timeScale = Mathf.Clamp(Time.timeScale - 25.0f, 0.0f, 100.0f);
                     break;
                 case OVRTouchpad.TouchEvent.Up:
