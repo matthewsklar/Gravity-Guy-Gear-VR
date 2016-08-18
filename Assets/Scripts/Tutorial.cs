@@ -86,17 +86,13 @@ namespace Assets.Scripts
         {
             Time.timeScale = 0.0f;
 
-            _tutorialMessage = new GameObject("TutorialMessage");
+            _tutorialMessage = (GameObject) UnityEngine.Object.Instantiate(Resources.Load("Tutorial"));
             _tutorialMessage.transform.SetParent(GameObject.Find("Canvas").transform);
+            _tutorialMessage.transform.localPosition = Vector3.zero;
+            _tutorialMessage.transform.rotation = Camera.main.transform.rotation;
 
-            var messageText = _tutorialMessage.AddComponent<Text>();
+            var messageText = _tutorialMessage.GetComponentsInChildren(typeof(Text))[0].GetComponent<Text>();
             messageText.text = _message;
-
-            var arialFont = (Font) Resources.GetBuiltinResource(typeof(Font), "Arial.ttf");
-            messageText.font = arialFont;
-            messageText.material = arialFont.material;
-
-            messageText.transform.localPosition = Vector3.zero;
 
             IsDisplay = true;
 

@@ -87,7 +87,7 @@ namespace Assets.Scripts
                         () =>
                             GameManager.LastTouchEvent.TouchType == OVRTouchpad.TouchEvent.Up ||
                             GameManager.LastTouchEvent.TouchType == OVRTouchpad.TouchEvent.Down));
-                    GameManager.RegisterTutorial(new Tutorial("Try to jump to the glowing planet",
+                    GameManager.RegisterTutorial(new Tutorial("Try to jump to the glowing planet\nTap to continue",
                         () => GameManager.LastTouchEvent.TouchType == OVRTouchpad.TouchEvent.SingleTap));
                     break;
                 default:
