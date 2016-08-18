@@ -24,7 +24,6 @@ namespace Assets.Scripts.GameManagement
         /// </summary>
         public Vector3 VictoryPosition;
         #endregion
-        // TODO: Make click remove tutorial
         // TODO: Fix first level starting with jump kind of
         #region Methods
         #region Initialization

@@ -79,7 +79,7 @@ namespace Assets.Scripts.CelestialBody
         #region Collision detection
         private void OnCollisionEnter(Collision collision)
         {
-            Debug.Log(gameObject.name);
+            Debug.Log(collision.collider.attachedRigidbody);
         }
         #endregion
         #endregion

@@ -113,8 +113,8 @@ namespace Assets.Scripts.Player
                 try {
                     if (hit.collider.gameObject == _landedBody.gameObject) return;
                     // ReSharper disable once UnusedVariable
-                } catch(NullReferenceException e) {
-                    //I would throw the error but it happens all the time so it would cluster the log but here's a new throw
+                } catch {
+                    //I would throw the error but it happens all the time so it would cluster the log but here's a new throw (NulReferenceException)
                     //   eee
                     // ee   ee
                     //e       e

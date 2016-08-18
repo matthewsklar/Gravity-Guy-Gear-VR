@@ -90,8 +90,6 @@ namespace Assets.Scripts
                     GameManager.RegisterTutorial(new Tutorial("Try to jump to the glowing planet\nTap to continue",
                         () => GameManager.LastTouchEvent.TouchType == OVRTouchpad.TouchEvent.SingleTap));
                     break;
-                default:
-                    break;
             }
         }
 

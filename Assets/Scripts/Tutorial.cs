@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Security.Principal;
 using Assets.Scripts.GameManagement;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,22 +9,34 @@ namespace Assets.Scripts
     {
         #region Fields
         /// <summary>
+        /// The queue number of the tutorial for the level
+        /// </summary>
+        private readonly int _id;
+
+        /// <summary>
         /// The message of the tutorial
         /// </summary>
         private readonly string _message;
 
         /// <summary>
-        /// The trigger to check if to add the tutorial message
+        /// The trigger to start the tutorial
         /// </summary>
         private readonly Func<bool> _messageStartTrigger;
 
+        /// <summary>
+        /// The trigger to end the tutorial
+        /// </summary>
         private readonly Func<bool> _messageEndTrigger;
 
-        public bool IsDisplay;
-
-        private readonly int _id;
-
+        /// <summary>
+        /// The tutorial GameObject to display on screen
+        /// </summary>
         private GameObject _tutorialMessage;
+
+        /// <summary>
+        /// If the tutorial is being displayed
+        /// </summary>
+        public bool IsDisplay;
         #endregion
 
         #region Methods
