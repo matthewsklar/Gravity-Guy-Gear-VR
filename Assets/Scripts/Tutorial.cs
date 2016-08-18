@@ -41,6 +41,11 @@ namespace Assets.Scripts
 
         #region Methods
         #region Initialization
+        /// <summary>
+        /// Create a new tutorial that starts as soon as its queue is up
+        /// </summary>
+        /// <param name="message">The message of the tutorial</param>
+        /// <param name="messageEndTrigger">The trigger to end the tutorial</param>
         public Tutorial(string message, Func<bool> messageEndTrigger)
         {
             _message = message;
@@ -53,6 +58,12 @@ namespace Assets.Scripts
             _id = GameManager.RegisteredTutorials.Count - 1;
         }
 
+        /// <summary>
+        /// Create a new tutorial with a dynamic start trigger
+        /// </summary>
+        /// <param name="message">The message of the tutorial</param>
+        /// <param name="messageStartTrigger">The trigger to start the tutorial if it's queue is up</param>
+        /// <param name="messageEndTrigger">The trigger to end the tutorial</param>
         public Tutorial(string message, Func<bool> messageStartTrigger, Func<bool> messageEndTrigger)
         {
             _message = message;
@@ -65,7 +76,11 @@ namespace Assets.Scripts
         }
         #endregion
 
-        public void CheckTrigger()
+        #region Trigger
+        /// <summary>
+        /// The trigger that starts the tutorial
+        /// </summary>
+        public void StartTrigger()
         {
             if (_id >= 0) {
                 if (GameManager.RegisteredTutorials[_id].IsDisplay) return;
@@ -77,10 +92,13 @@ namespace Assets.Scripts
 
             GameManager.CurrentTutorial++;
 
-            DisplayMessage();
+            DisplayTutorial();
         }
 
-        public void CheckDisplay()
+        /// <summary>
+        /// The trigger that ends the tutorial
+        /// </summary>
+        public void EndTrigger()
         {
             if (!IsDisplay) return;
 
@@ -90,10 +108,15 @@ namespace Assets.Scripts
                 return;
             }
 
-            RemoveMessage();
+            RemoveTutorial();
         }
+        #endregion
 
-        private void DisplayMessage()
+        #region Tutorial
+        /// <summary>
+        /// Display the tutorial and pause the game
+        /// </summary>
+        private void DisplayTutorial()
         {
             Time.timeScale = 0.0f;
 
@@ -102,15 +125,17 @@ namespace Assets.Scripts
             _tutorialMessage.transform.localPosition = Vector3.zero;
             _tutorialMessage.transform.rotation = Camera.main.transform.rotation;
 
-            var messageText = _tutorialMessage.GetComponentsInChildren(typeof(Text))[0].GetComponent<Text>();
-            messageText.text = _message;
+            _tutorialMessage.GetComponentsInChildren(typeof(Text))[0].GetComponent<Text>().text = _message;
 
             IsDisplay = true;
 
             Debug.Log("Tutorial display " + _message);
         }
 
-        private void RemoveMessage()
+        /// <summary>
+        /// Remove the tutorial
+        /// </summary>
+        private void RemoveTutorial()
         {
             UnityEngine.Object.Destroy(_tutorialMessage);
 
@@ -118,6 +143,7 @@ namespace Assets.Scripts
 
             Debug.Log("Tutorial remove display " + _message);
         }
+        #endregion
         #endregion
     }
 }

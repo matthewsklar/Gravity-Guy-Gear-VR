@@ -58,9 +58,9 @@ namespace Assets.Scripts.GameManagement
 
             int currentTutorial = GameManager.CurrentTutorial;
 
-            if (currentTutorial >= 0) GameManager.RegisteredTutorials[currentTutorial].CheckDisplay();
+            if (currentTutorial >= 0) GameManager.RegisteredTutorials[currentTutorial].EndTrigger();
 
-            GameManager.RegisteredTutorials.ForEach(i => i.CheckTrigger());
+            GameManager.RegisteredTutorials.ForEach(i => i.StartTrigger());
 
             GameManager.LastTouchEvent = null;
 
