@@ -215,6 +215,18 @@ Prefab:
       propertyPath: Parent
       value: 
       objectReference: {fileID: 1915778033}
+    - target: {fileID: 2369658, guid: ef381a81975950d4faf1d9d623998628, type: 2}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 7376562ddb369724a8404759c6ebd94f, type: 2}
+    - target: {fileID: 9690094, guid: ef381a81975950d4faf1d9d623998628, type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9690094, guid: ef381a81975950d4faf1d9d623998628, type: 2}
+      propertyPath: m_Time
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ef381a81975950d4faf1d9d623998628, type: 2}
   m_IsPrefabParent: 0
@@ -416,6 +428,14 @@ Prefab:
       propertyPath: m_TagString
       value: Untagged
       objectReference: {fileID: 0}
+    - target: {fileID: 9681714, guid: 3bcebde7572eab44696b1f5df38ffbb3, type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9681714, guid: 3bcebde7572eab44696b1f5df38ffbb3, type: 2}
+      propertyPath: m_Time
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3bcebde7572eab44696b1f5df38ffbb3, type: 2}
   m_IsPrefabParent: 0
@@ -601,6 +621,14 @@ Prefab:
     - target: {fileID: 407848, guid: 3bcebde7572eab44696b1f5df38ffbb3, type: 2}
       propertyPath: m_LocalScale.z
       value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 9681714, guid: 3bcebde7572eab44696b1f5df38ffbb3, type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9681714, guid: 3bcebde7572eab44696b1f5df38ffbb3, type: 2}
+      propertyPath: m_Time
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3bcebde7572eab44696b1f5df38ffbb3, type: 2}

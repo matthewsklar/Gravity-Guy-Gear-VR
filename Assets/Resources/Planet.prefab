@@ -108,7 +108,7 @@ TrailRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Time: Infinity
+  m_Time: 10
   m_StartWidth: 10
   m_EndWidth: 10
   m_Colors:

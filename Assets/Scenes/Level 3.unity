@@ -152,6 +152,14 @@ Prefab:
       propertyPath: m_Mass
       value: 50
       objectReference: {fileID: 0}
+    - target: {fileID: 2358550, guid: 3bcebde7572eab44696b1f5df38ffbb3, type: 2}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: eff9dc043a18eb344a8795d3e20ab108, type: 2}
+    - target: {fileID: 187144, guid: 3bcebde7572eab44696b1f5df38ffbb3, type: 2}
+      propertyPath: m_Name
+      value: Earth
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3bcebde7572eab44696b1f5df38ffbb3, type: 2}
   m_IsPrefabParent: 0
@@ -346,6 +354,10 @@ Prefab:
       propertyPath: m_Size
       value: 250
       objectReference: {fileID: 0}
+    - target: {fileID: 2369658, guid: ef381a81975950d4faf1d9d623998628, type: 2}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 227fe757800b19d4ba54a32c02b0ad92, type: 2}
     m_RemovedComponents:
     - {fileID: 11468716, guid: ef381a81975950d4faf1d9d623998628, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: ef381a81975950d4faf1d9d623998628, type: 2}
