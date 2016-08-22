@@ -46,6 +46,14 @@ namespace Assets.Scripts.Player
 
             Debug.Log("Player has landed on " + collisionCollider);
 
+            if (collisionCollider.tag == "Fatal") {
+                Debug.Log("Player has died on " + collisionCollider);
+                // TODO: You died screen
+                GameManager.CurrentLevel.RestartLevel();
+
+                return;
+            }
+
             Utilities.SetVelocity(collision.rigidbody.velocity, gameObject);
 
             Material material = collision.gameObject.GetComponent<Renderer>().material;
