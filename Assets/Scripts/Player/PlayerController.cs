@@ -151,7 +151,7 @@ namespace Assets.Scripts.Player
             var touchArgs = (OVRTouchpad.TouchArgs) e;
 
             if (touchArgs.TouchType != OVRTouchpad.TouchEvent.SingleTap) return;
-
+            
             if (GameManager.RegisteredTutorials.Any(t => t.IsDisplay)) return;
 
             Jump();

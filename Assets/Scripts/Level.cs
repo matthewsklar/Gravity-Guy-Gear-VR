@@ -80,14 +80,14 @@ namespace Assets.Scripts
                     GameManager.RegisterTutorial(new Tutorial("Take a look at your surroundings\nTAP to continue",
                         () => GameManager.LastTouchEvent.TouchType == OVRTouchpad.TouchEvent.SingleTap));
 
-                    GameManager.RegisterTutorial(new Tutorial("Swipe RIGHT to speed up\nSWIPE to continue",
+                    GameManager.RegisterTutorial(new Tutorial("Swipe RIGHT to speed up time",
                         () => GameManager.LastTouchEvent.TouchType == OVRTouchpad.TouchEvent.Left));
 
-                    GameManager.RegisterTutorial(new Tutorial("Swipe LEFT to slow down\nSWIPE to continue",
+                    GameManager.RegisterTutorial(new Tutorial("Swipe LEFT to slow down time",
                         () => GameManager.LastTouchEvent.TouchType == OVRTouchpad.TouchEvent.Left,
                         () => GameManager.LastTouchEvent.TouchType == OVRTouchpad.TouchEvent.Right));
 
-                    GameManager.RegisterTutorial(new Tutorial("Swipe UP or DOWN to toggle map view\nSWIPE to continue",
+                    GameManager.RegisterTutorial(new Tutorial("Swipe UP or DOWN to toggle map view",
                         () =>
                             GameManager.LastTouchEvent.TouchType == OVRTouchpad.TouchEvent.Up ||
                             GameManager.LastTouchEvent.TouchType == OVRTouchpad.TouchEvent.Down));
@@ -96,7 +96,10 @@ namespace Assets.Scripts
                         new Tutorial("If you get stuck, you can press BACK to restart the level\nTAP to continue",
                             () => GameManager.LastTouchEvent.TouchType == OVRTouchpad.TouchEvent.SingleTap));
 
-                    GameManager.RegisterTutorial(new Tutorial("Try to jump to the glowing planet\nTAP to continue",
+                    GameManager.RegisterTutorial(new Tutorial("TAP to jump\nTAP to continue",
+                        () => GameManager.LastTouchEvent.TouchType == OVRTouchpad.TouchEvent.SingleTap));
+
+                    GameManager.RegisterTutorial(new Tutorial("Get to the glowing planet to win\nTAP to end tutorial",
                         () => GameManager.LastTouchEvent.TouchType == OVRTouchpad.TouchEvent.SingleTap));
                     break;
             }

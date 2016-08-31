@@ -118,8 +118,6 @@ namespace Assets.Scripts
         /// </summary>
         private void DisplayTutorial()
         {
-            Time.timeScale = 0.0f;
-
             _tutorialMessage = (GameObject) UnityEngine.Object.Instantiate(Resources.Load("Tutorial"));
             _tutorialMessage.transform.SetParent(GameObject.Find("Canvas").transform);
             _tutorialMessage.transform.localPosition = Vector3.zero;
