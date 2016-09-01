@@ -18,6 +18,8 @@ namespace Assets.Scripts.Player
         /// </summary>
         private bool _isLanded;
 
+        private bool _isJumpQueued;
+
         /// <summary>
         /// The GameObject, if any, that the player is currently landed on
         /// </summary>
@@ -30,6 +32,7 @@ namespace Assets.Scripts.Player
         {
             _launchSpeed = 75.0f;
             _isLanded = false;
+            _isJumpQueued = false;
             _landedBody = null;
 
             GameManager.IsVictory = false;

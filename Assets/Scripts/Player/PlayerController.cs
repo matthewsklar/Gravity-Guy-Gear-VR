@@ -21,10 +21,11 @@ namespace Assets.Scripts.Player
 
             if (!Time.timeScale.Equals(0.0f)) return;
 
+            if (_isLanded) _isJumpQueued = !_isJumpQueued;
+
             _isLanded = !_isLanded;
 
             if (_isLanded) Utilities.AddVelocity(-forward * _launchSpeed, gameObject);
-
         }
 
         private void Victory()
@@ -77,6 +78,7 @@ namespace Assets.Scripts.Player
             material.color = new Color(material.color.r, material.color.g, material.color.b, 1.0f);
 
             _isLanded = false;
+            _isJumpQueued = false;
             _landedBody = null;
         }
         #endregion
@@ -109,7 +111,7 @@ namespace Assets.Scripts.Player
                 " Z: " + Mathf.Round(netVelocity.z),
                 GameObject.Find("NetVelocityText"));
 
-            Utilities.SetText(_isLanded ? "" : "Jump", GameObject.Find("JumpText"));
+            Utilities.SetText(_isJumpQueued ? "Jump Queued" : "", GameObject.Find("JumpText"));
         }
 
         private void FacingCelestialBody()
